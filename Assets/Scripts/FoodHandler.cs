@@ -77,9 +77,9 @@ public class FoodHandler : MonoBehaviour
                 yield return Timing.WaitForSeconds(TIMER_WAIT_TIMERS);
             }
 
-            //TODO Handle cat.
+            CatHandler.Instance.HandleCat();
 
-            while (false) // Wait for cat to end.
+            while (CatHandler.Instance.IsCatActive)
             {
                 yield return Timing.WaitForSeconds(TIMER_WAIT_TIMERS);
             }

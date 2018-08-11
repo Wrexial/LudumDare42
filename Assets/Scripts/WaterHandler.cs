@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using MEC;
 using UnityEngine;
-using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class WaterHandler : MonoBehaviour
 {
@@ -22,8 +22,10 @@ public class WaterHandler : MonoBehaviour
     public AnimationCurve WaterFlowCurve;
 
     public bool WaterEdgeOn { get; private set; }
+    public bool CanHandleWater { get; private set; }
 
     private float _currentWaterLevel = 1f;
+
     private const float WATER_SIZE_LIMIT_MIN = 0.1f;
     private const float WATER_SIZE_LIMIT_MAX = 1.25f;
     private const float WATER_SIZE_LIMIT_MAX_ON = 1.03f;
@@ -40,6 +42,7 @@ public class WaterHandler : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        CanHandleWater = true;
         WaterEdgeOn = false;
         WaterEdge.SetActive(false);
         _handleWaterCoroutine = Timing.RunCoroutine(HandleWater());
@@ -52,6 +55,11 @@ public class WaterHandler : MonoBehaviour
 
     public void TurnOnFaucet()
     {
+        if (!CanHandleWater)
+        {
+            return;
+        }
+
         _faucetOn = true;
         TimingHelpers.CleanlyKillCoroutine(ref _waterLevelCoroutine);
         _faucetControls = Timing.RunCoroutine(HandleFaucet());
@@ -59,11 +67,30 @@ public class WaterHandler : MonoBehaviour
 
     public void TurnOffFaucet()
     {
+        if (!CanHandleWater)
+        {
+            return;
+        }
+
         _faucetOn = false;
         TimingHelpers.CleanlyKillCoroutine(ref _faucetControls);
         TimingHelpers.CleanlyKillCoroutine(ref _handleWaterCoroutine);
         _handleWaterCoroutine = Timing.RunCoroutine(HandleWater());
 
+    }
+
+    public void StopAllWaterInteractions()
+    {
+        _faucetOn = false;
+        TimingHelpers.CleanlyKillCoroutine(ref _faucetControls);
+        TimingHelpers.CleanlyKillCoroutine(ref _handleWaterCoroutine);
+        CanHandleWater = false;
+    }
+
+    public void ResumeWaterInteractions()
+    {
+        _handleWaterCoroutine = Timing.RunCoroutine(HandleWater());
+        CanHandleWater = true;
     }
 
     private void DecrementWaterLevel(float value, float overTime)
@@ -148,7 +175,7 @@ public class WaterHandler : MonoBehaviour
         else if (_currentWaterLevel < WATER_SIZE_LIMIT_MIN)
         {
             _currentWaterLevel = WATER_SIZE_LIMIT_MIN;
-            Debug.Log("Game Over");
+            Debug.Log("Game Over - Water level too low!!");
         }
         else if (WaterEdgeOn && _currentWaterLevel < WATER_SIZE_LIMIT_MAX_OFF)
         {

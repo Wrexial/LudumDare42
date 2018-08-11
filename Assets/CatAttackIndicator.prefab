@@ -9,32 +9,32 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1595271242616894}
+  m_RootGameObject: {fileID: 1717028321161882}
   m_IsPrefabAsset: 1
---- !u!1 &1595271242616894
+--- !u!1 &1717028321161882
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 224638226215675972}
-  - component: {fileID: 222633379369594878}
-  - component: {fileID: 114456130988630242}
-  - component: {fileID: 61796125985488238}
+  - component: {fileID: 224137414286882414}
+  - component: {fileID: 222764437019947456}
+  - component: {fileID: 114930853657559978}
+  - component: {fileID: 61691841520237794}
   m_Layer: 5
-  m_Name: FoodItem
-  m_TagString: Food
+  m_Name: CatAttackIndicator
+  m_TagString: Death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!61 &61796125985488238
+--- !u!61 &61691841520237794
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1595271242616894}
+  m_GameObject: {fileID: 1717028321161882}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -54,12 +54,12 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114456130988630242
+--- !u!114 &114930853657559978
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1595271242616894}
+  m_GameObject: {fileID: 1717028321161882}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
@@ -81,19 +81,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!222 &222633379369594878
+--- !u!222 &222764437019947456
 CanvasRenderer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1595271242616894}
+  m_GameObject: {fileID: 1717028321161882}
   m_CullTransparentMesh: 0
---- !u!224 &224638226215675972
+--- !u!224 &224137414286882414
 RectTransform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1595271242616894}
+  m_GameObject: {fileID: 1717028321161882}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -104,5 +104,5 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 25, y: 25}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}

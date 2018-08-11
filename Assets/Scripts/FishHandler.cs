@@ -1,6 +1,7 @@
 ﻿using MEC;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class FishHandler : MonoBehaviour
 {
@@ -30,7 +31,14 @@ public class FishHandler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        FoodHandler.Instance.CollectFood(collision.gameObject);
+        if (collision.CompareTag("Food"))
+        {
+            FoodHandler.Instance.CollectFood(collision.gameObject);
+        }
+        else if (collision.CompareTag("Death"))
+        {
+            Debug.Log("Game Over - Hit by cat");
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -40,7 +48,7 @@ public class FishHandler : MonoBehaviour
 
         if (WaterHandler.Instance.WaterEdgeOn)
         {
-            Debug.Log("Game Over");
+            Debug.Log("Game Over - Hit water edge");
         }
     }
 
@@ -55,7 +63,7 @@ public class FishHandler : MonoBehaviour
             //if (WaterHandler.Instance.WaterEdgeOn)
             //{
             //    var position = WaterHandler.Instance.GetClosestToEdge(transform.localPosition);
-                  //Mod thisSpeed
+            //Mod thisSpeed
             //}
 
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, position, thisSpeed * Time.deltaTime);
