@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class WaterHandler : MonoBehaviour
 {
+    public static WaterHandler Instance;
+
     public float WaterSize = 500f;
     public float FaucetFillRate = 0.05f;
     public float FaucetFillSpeed = 1f;
-    public Image WaterEdge;
+    public GameObject WaterEdge;
 
     public float MinDelayForWaterChange = 0.1f;
     public float MaxDelayForWaterChange = 0.25f;
@@ -17,15 +19,18 @@ public class WaterHandler : MonoBehaviour
 
     public float StartDelay = 3f;
     public float MinDelayForWater = 2f;
+    public AnimationCurve WaterFlowCurve;
 
+    public bool WaterEdgeOn { get; private set; }
+
+    private float _currentWaterLevel = 1f;
     private const float WATER_SIZE_LIMIT_MIN = 0.1f;
-    private const float WATER_SIZE_LIMIT_MAX = 1.19f;
-    private const float WATER_SIZE_LIMIT_MAX_ON = 1.16f;
-    private const float WATER_SIZE_LIMIT_MAX_OFF = 1.16f;
+    private const float WATER_SIZE_LIMIT_MAX = 1.25f;
+    private const float WATER_SIZE_LIMIT_MAX_ON = 1.03f;
+    private const float WATER_SIZE_LIMIT_MAX_OFF = 1.03f;
     private bool _faucetOn = false;
     private CoroutineHandle? _waterLevelCoroutine;
     private CoroutineHandle? _faucetControls;
-    private bool _waterEdgeOn = false;
 
     private const float FISH_REFRESH_RATE = 0.15f;
 
@@ -34,7 +39,9 @@ public class WaterHandler : MonoBehaviour
 
     private void Awake()
     {
-        WaterEdge.gameObject.SetActive(false);
+        Instance = this;
+        WaterEdgeOn = false;
+        WaterEdge.SetActive(false);
         _handleWaterCoroutine = Timing.RunCoroutine(HandleWater());
     }
 
@@ -67,23 +74,23 @@ public class WaterHandler : MonoBehaviour
         }
 
         TimingHelpers.CleanlyKillCoroutine(ref _waterLevelCoroutine);
-        _waterLevelCoroutine = Timing.RunCoroutine(HandleWaterLevelChange(transform.localScale + (Vector3.one * -value), overTime));
+        _waterLevelCoroutine = Timing.RunCoroutine(HandleWaterLevelChange(_currentWaterLevel - value, overTime));
     }
 
     private IEnumerator<float> HandleFaucet()
     {
         while (true)
         {
-            var startScale = transform.localScale;
-            var endScale = transform.localScale + (Vector3.one * FaucetFillRate);
+            var startWaterLevel = _currentWaterLevel;
+            var endWaterLevel = _currentWaterLevel + FaucetFillRate;
             var delta = 0f;
             var timer = 0f;
             while (delta != 1)
             {
                 timer += Time.deltaTime;
                 delta = Mathf.Clamp01(timer / FaucetFillSpeed);
-                transform.localScale = Vector3.Lerp(startScale, endScale, delta);
-                ClampWaterLevel();
+                _currentWaterLevel = Mathf.Lerp(startWaterLevel, endWaterLevel, delta);
+                UpdateWaterLevel();
                 yield return Timing.WaitForOneFrame;
             }
         }
@@ -101,46 +108,52 @@ public class WaterHandler : MonoBehaviour
         }
     }
 
-    private IEnumerator<float> HandleWaterLevelChange(Vector3 endScale, float duration)
+    private IEnumerator<float> HandleWaterLevelChange(float endWaterLevel, float duration)
     {
-        var startScale = transform.localScale;
+        var startWaterLevel = _currentWaterLevel;
         var delta = 0f;
         var timer = 0f;
+
         while (delta != 1)
         {
             timer += Time.deltaTime;
             delta = Mathf.Clamp01(timer / duration);
-            transform.localScale = Vector3.Lerp(startScale, endScale, delta);
-            ClampWaterLevel();
+            _currentWaterLevel = Mathf.Lerp(startWaterLevel, endWaterLevel, delta);
+            UpdateWaterLevel();
             yield return Timing.WaitForOneFrame;
         }
     }
 
+    private void UpdateWaterLevel()
+    {
+        ClampWaterLevel();
+        transform.localScale = Vector3.one * WaterFlowCurve.Evaluate(_currentWaterLevel);
+    }
+
     private void ClampWaterLevel()
     {
-        float currentScale = transform.localScale.x;
-        if (currentScale > WATER_SIZE_LIMIT_MAX_ON)
+        if (_currentWaterLevel > WATER_SIZE_LIMIT_MAX_ON)
         {
-            if (currentScale > WATER_SIZE_LIMIT_MAX)
+            if (_currentWaterLevel > WATER_SIZE_LIMIT_MAX)
             {
-                transform.localScale = Vector3.one * WATER_SIZE_LIMIT_MAX;
+                _currentWaterLevel = WATER_SIZE_LIMIT_MAX;
             }
 
-            if (!_waterEdgeOn)
+            if (!WaterEdgeOn)
             {
-                WaterEdge.gameObject.SetActive(true);
-                _waterEdgeOn = true;
+                WaterEdge.SetActive(true);
+                WaterEdgeOn = true;
             }
         }
-        else if (currentScale < WATER_SIZE_LIMIT_MIN)
+        else if (_currentWaterLevel < WATER_SIZE_LIMIT_MIN)
         {
-            transform.localScale = Vector3.one * WATER_SIZE_LIMIT_MIN;
+            _currentWaterLevel = WATER_SIZE_LIMIT_MIN;
             Debug.Log("Game Over");
         }
-        else if (_waterEdgeOn && currentScale < WATER_SIZE_LIMIT_MAX_OFF)
+        else if (WaterEdgeOn && _currentWaterLevel < WATER_SIZE_LIMIT_MAX_OFF)
         {
-            WaterEdge.gameObject.SetActive(false);
-            _waterEdgeOn = false;
+            WaterEdge.SetActive(false);
+            WaterEdgeOn = false;
         }
     }
 

@@ -28,9 +28,20 @@ public class FishHandler : MonoBehaviour
         _movingCoroutine = Timing.RunCoroutine(HandleGoTo(position));
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        FoodHandler.Instance.CollectFood(collision.gameObject);
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         TimingHelpers.CleanlyKillCoroutine(ref _movingCoroutine);
+        Debug.Log("Hit edge!");
+
+        if (WaterHandler.Instance.WaterEdgeOn)
+        {
+            Debug.Log("Game Over");
+        }
     }
 
     private IEnumerator<float> HandleGoTo(Vector3 position)
@@ -41,6 +52,13 @@ public class FishHandler : MonoBehaviour
 
             Vector3 vectorToTarget = position - transform.localPosition;
             float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
+
+            //if (WaterHandler.Instance.WaterEdgeOn)
+            //{
+            //    var position = WaterHandler.Instance.GetClosestToEdge(transform.localPosition);
+
+            //}
+
             Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
             transform.rotation = Quaternion.Slerp(transform.rotation, q, RotationSpeed * Time.deltaTime);
 
