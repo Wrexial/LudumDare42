@@ -225,7 +225,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56567631f1f92a643b12fc541e6bcddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MinDelayForWaterChange: 0.1
+  MaxDelayForWaterChange: 0.25
+  MinWaterChange: 0.01
+  MaxWaterChange: 0.02
   StartDelay: 10
+  MinDelayForWater: 2
   Water: {fileID: 1362581816}
   Fish: {fileID: 109763890}
 --- !u!1 &109763888
