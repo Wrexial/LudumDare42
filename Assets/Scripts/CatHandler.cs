@@ -17,15 +17,24 @@ public class CatHandler : MonoBehaviour
     public float DelayBeforeCatSpawnsAttacks = 1f;
     public float DelayBeforeCatAttacksKill = 2.5f;
     public float DelayBeforeCatCleanup = 0.05f;
+    public int BaseAttackSpawnCount = 3;
 
     private int _round;
     private CoroutineHandle? _catHandler;
+    private List<Collider2D> _attacks;
 
     private void Awake()
     {
         Instance = this;
         Cat.SetActive(false);
         CatWaves.SetActive(false);
+        _attacks = new List<Collider2D>();
+        for (int i = 0; i < BaseAttackSpawnCount - 1; i++)
+        {
+            var attackInstance = Instantiate(CatAttackIndicatorPrefab, transform).GetComponent<Collider2D>();
+            attackInstance.gameObject.SetActive(false);
+            _attacks.Add(attackInstance);
+        }
     }
 
     private void OnDestroy()
@@ -48,11 +57,30 @@ public class CatHandler : MonoBehaviour
         CatWaves.SetActive(false);
         Cat.SetActive(true);
         yield return Timing.WaitForSeconds(DelayBeforeCatSpawnsAttacks);
-        Debug.Log("Spawn death circles");
+        _attacks.Add(Instantiate(CatAttackIndicatorPrefab, transform).GetComponent<Collider2D>());
+
+        foreach (var attack in _attacks)
+        {
+            attack.transform.position = WaterHandler.Instance.GetPointInsideWater();
+            attack.gameObject.SetActive(true);
+        }
+
         yield return Timing.WaitForSeconds(DelayBeforeCatAttacksKill);
-        Debug.Log("Actually kill fish!");
+
+        foreach (var attack in _attacks)
+        {
+            attack.enabled = true;
+        }
+
         yield return Timing.WaitForSeconds(DelayBeforeCatCleanup);
+
+        foreach (var attack in _attacks)
+        {
+            attack.gameObject.SetActive(false);
+        }
+
         Cat.SetActive(false);
         WaterHandler.Instance.ResumeWaterInteractions();
+        IsCatActive = false;
     }
 }

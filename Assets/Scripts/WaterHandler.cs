@@ -11,6 +11,7 @@ public class WaterHandler : MonoBehaviour
     public float FaucetFillRate = 0.05f;
     public float FaucetFillSpeed = 1f;
     public GameObject WaterEdge;
+    public GameObject WaterBasedSpawnPointsParent;
 
     public float MinDelayForWaterChange = 0.1f;
     public float MaxDelayForWaterChange = 0.25f;
@@ -33,6 +34,7 @@ public class WaterHandler : MonoBehaviour
     private bool _faucetOn = false;
     private CoroutineHandle? _waterLevelCoroutine;
     private CoroutineHandle? _faucetControls;
+    private Transform[] _spawnPoints;
 
     private const float FISH_REFRESH_RATE = 0.15f;
 
@@ -42,6 +44,7 @@ public class WaterHandler : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        _spawnPoints = WaterBasedSpawnPointsParent.GetComponentsInChildren<Transform>();
         CanHandleWater = true;
         WaterEdgeOn = false;
         WaterEdge.SetActive(false);
@@ -186,7 +189,6 @@ public class WaterHandler : MonoBehaviour
 
     public Vector3 GetPointInsideWater()
     {
-        var convertedToV2 = new Vector2(transform.localPosition.x, transform.localPosition.y);
-        return (Random.insideUnitCircle * WaterSize * transform.localScale) + convertedToV2;
+        return _spawnPoints[Random.Range(0, _spawnPoints.Length)].position;
     }
 }
