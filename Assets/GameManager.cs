@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     private const float MaxDelayForWater = 5f;
     private const float MinWaterChange = 0.01f;
     private const float MaxWaterChange = 0.02f;
+
     public float StartDelay = 3f;
 
     public WaterHandler Water;
@@ -48,7 +49,7 @@ public class GameManager : MonoBehaviour
         {
             delay -= Random.Range(MinDelayForWaterChange, MaxDelayForWaterChange);
             delay = Mathf.Clamp(delay, MinDelayForWater, MaxDelayForWater);
-            Water.IncrementWater(-Random.Range(MinWaterChange, MaxWaterChange));
+            Water.DecrementWaterLevel(Random.Range(MinWaterChange, MaxWaterChange), delay);
             yield return Timing.WaitForSeconds(delay);
         }
     }
