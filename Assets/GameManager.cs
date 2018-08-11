@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public const float MinDelayForWaterChange = 0.1f;
-    public const float MaxDelayForWaterChange = 0.25f;
-    public const float MinDelayForWater = 2f;
-    public const float MaxDelayForWater = 5f;
-    public const float MinWaterChange = 0.01f;
-    public const float MaxWaterChange = 0.02f;
+    public float MinDelayForWaterChange = 0.1f;
+    public float MaxDelayForWaterChange = 0.25f;
+    public float MinDelayForWater = 2f;
+    public float MaxDelayForWater = 5f;
+    public float MinWaterChange = 0.01f;
+    public float MaxWaterChange = 0.02f;
 
     public float StartDelay = 3f;
 
