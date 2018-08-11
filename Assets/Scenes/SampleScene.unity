@@ -225,14 +225,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56567631f1f92a643b12fc541e6bcddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinDelayForWaterChange: 0.1
-  MaxDelayForWaterChange: 0.25
-  MinWaterChange: 0.01
-  MaxWaterChange: 0.02
-  StartDelay: 10
-  MinDelayForWater: 2
-  Water: {fileID: 1362581816}
-  Fish: {fileID: 109763890}
 --- !u!1 &109763888
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,6 +553,75 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &870806207
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 870806208}
+  - component: {fileID: 870806210}
+  - component: {fileID: 870806209}
+  m_Layer: 5
+  m_Name: WaterEdge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &870806208
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 870806207}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1362581815}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -150}
+  m_SizeDelta: {x: 750, y: 20}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &870806209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 870806207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &870806210
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 870806207}
+  m_CullTransparentMesh: 0
 --- !u!1 &1292973537
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,7 +720,8 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 870806208}
   m_Father: {fileID: 609648}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -682,6 +744,13 @@ MonoBehaviour:
   WaterSize: 200
   FaucetFillRate: 0.05
   FaucetFillSpeed: 1
+  WaterEdge: {fileID: 870806209}
+  MinDelayForWaterChange: 0.1
+  MaxDelayForWaterChange: 0.25
+  MinWaterChange: 0.01
+  MaxWaterChange: 0.02
+  StartDelay: 3
+  MinDelayForWater: 2
 --- !u!114 &1362581817
 MonoBehaviour:
   m_ObjectHideFlags: 0
