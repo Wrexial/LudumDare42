@@ -5,12 +5,12 @@ using Random = UnityEngine.Random;
 
 public class FoodHandler : MonoBehaviour
 {
-    private const float TIMER_WAIT_TIMERS = 0.25f;
     public static FoodHandler Instance;
     public GameObject FoodPrefab;
 
     public float FoodSpawnMinDelay = 2;
     public float FoodSpawnMaxDelay = 5;
+
     public int FoodToSpawnForRoundMin = 5;
     public int FoodToSpawnForRoundMax = 10;
 
@@ -20,6 +20,7 @@ public class FoodHandler : MonoBehaviour
     private Queue<GameObject> _foodQueue;
     private int _foodToSpawn = 0;
     private int _foodStillIngame;
+    private const float TIMER_WAIT_TIMERS = 0.25f;
 
     private void Awake()
     {
