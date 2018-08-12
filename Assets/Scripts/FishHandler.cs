@@ -74,7 +74,6 @@ public class FishHandler : MonoBehaviour
         else if (collision.CompareTag("Death"))
         {
             KillFishie();
-            Debug.Log("Game Over - Hit by cat");
         }
     }
 
@@ -82,13 +81,10 @@ public class FishHandler : MonoBehaviour
     {
         TimingHelpers.CleanlyKillCoroutine(ref _movingCoroutine);
         _movingCoroutine = Timing.RunCoroutine(HandleGoTo(transform.localPosition));
-
-        Debug.Log("Hit edge!");
-
+        
         if (WaterHandler.Instance.WaterEdgeOn)
         {
             KillFishie();
-            Debug.Log("Game Over - Hit water edge");
         }
     }
 
