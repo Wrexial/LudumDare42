@@ -554,6 +554,8 @@ MonoBehaviour:
   CatTheme: {fileID: 1844000240}
   FaucetEffect: {fileID: 2100601267}
   DrainEffect: {fileID: 1235544253}
+  WinJingle: {fileID: 8300000, guid: 46a8865dbd0f80d48a64b781c6ddeb3b, type: 3}
+  LoseJingle: {fileID: 8300000, guid: d921614fbc23644449ef10ba15ef6cf5, type: 3}
   CatSpawn:
   - {fileID: 8300000, guid: b0fe382f50e926c479e3a94397a64d5e, type: 3}
   - {fileID: 8300000, guid: 9938f66104694dd41820b79d11db7eae, type: 3}
