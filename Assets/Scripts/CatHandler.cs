@@ -1,6 +1,5 @@
-﻿using System;
+﻿using MEC;
 using System.Collections.Generic;
-using MEC;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
