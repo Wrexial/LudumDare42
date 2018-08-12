@@ -21,6 +21,7 @@ public class OnClickLoadScene : MonoBehaviour
 
     public void OnClick()
     {
+        AudioManager.Instance.PlayButtonPress();
         SceneManager.LoadScene(SceneToLoad);
     }
 }

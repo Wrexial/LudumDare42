@@ -79,9 +79,14 @@ public class FishHandler : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
+        if (!IsAlive)
+        {
+            return;
+        }
+
         TimingHelpers.CleanlyKillCoroutine(ref _movingCoroutine);
         _movingCoroutine = Timing.RunCoroutine(HandleGoTo(transform.localPosition), Segment.FixedUpdate);
-        
+
         if (WaterHandler.Instance.WaterEdgeOn)
         {
             KillFishie();

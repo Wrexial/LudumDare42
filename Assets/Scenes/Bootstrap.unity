@@ -649,6 +649,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6cc354d21b9d37c46b11c3fc21656195, type: 3}
   FinalPickup:
   - {fileID: 8300000, guid: ec6e8c61e32478743ae810a5b596bf42, type: 3}
+  ButtonPress:
+  - {fileID: 8300000, guid: 63126fccf1169aa4b965544900e6ddb6, type: 3}
+  - {fileID: 8300000, guid: 1d25b31e9b363da4ab98b60d59395ff1, type: 3}
+  - {fileID: 8300000, guid: e72ca7c0fccba9f4898eb84ae9fccb4b, type: 3}
+  - {fileID: 8300000, guid: 867b21d40ba621848bb92e9c514b484b, type: 3}
+  - {fileID: 8300000, guid: d0f5c66acdc7b0d47978dddb2692d8bd, type: 3}
 --- !u!82 &701256391
 AudioSource:
   m_ObjectHideFlags: 0

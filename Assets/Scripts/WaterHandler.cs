@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class WaterHandler : MonoBehaviour
 {
     public static WaterHandler Instance;
     public FishHandler CurrentFish;
+    public Image WaterImage;
 
     public float WaterSize = 500f;
     public float FaucetFillRate = 0.05f;
@@ -58,6 +60,7 @@ public class WaterHandler : MonoBehaviour
         _waterCollider = GetComponent<EdgeCollider2D>();
         FillingWaterAnim.SetActive(false);
         DrainingWaterAnim.SetActive(true);
+        WaterImage.alphaHitTestMinimumThreshold = 0.15f;
     }
 
     private void OnDestroy()

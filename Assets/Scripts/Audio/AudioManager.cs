@@ -26,7 +26,7 @@ public class AudioManager : MonoBehaviour
     public Image MuteButtonImage;
     public Sprite SoundOff;
     public Sprite SoundOn;
-    
+
     public LoopableHandler CatTheme;
     public LoopableHandler FaucetEffect;
     public LoopableHandler DrainEffect;
@@ -38,6 +38,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] Swiming;
     public AudioClip[] Pickup;
     public AudioClip[] FinalPickup;
+    public AudioClip[] ButtonPress;
 
     private void Awake()
     {
@@ -92,5 +93,10 @@ public class AudioManager : MonoBehaviour
     public void PlayLoseJingle()
     {
         OneShotSource.PlayOneShot(LoseJingle);
+    }
+
+    public void PlayButtonPress()
+    {
+        OneShotSource.PlayOneShot(ButtonPress[Random.Range(0, ButtonPress.Length)]);
     }
 }

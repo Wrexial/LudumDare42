@@ -7294,6 +7294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentFish: {fileID: 109763890}
+  WaterImage: {fileID: 1362581817}
   WaterSize: 200
   FaucetFillRate: 0.04
   FaucetFillSpeed: 1
