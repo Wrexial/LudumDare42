@@ -62,7 +62,7 @@ public class FishHandler : MonoBehaviour
     public void MoveTo(Vector3 position)
     {
         TimingHelpers.CleanlyKillCoroutine(ref _movingCoroutine);
-        _movingCoroutine = Timing.RunCoroutine(HandleGoTo(position));
+        _movingCoroutine = Timing.RunCoroutine(HandleGoTo(position), Segment.FixedUpdate);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -80,7 +80,7 @@ public class FishHandler : MonoBehaviour
     private void OnCollisionStay2D(Collision2D collision)
     {
         TimingHelpers.CleanlyKillCoroutine(ref _movingCoroutine);
-        _movingCoroutine = Timing.RunCoroutine(HandleGoTo(transform.localPosition));
+        _movingCoroutine = Timing.RunCoroutine(HandleGoTo(transform.localPosition), Segment.FixedUpdate);
         
         if (WaterHandler.Instance.WaterEdgeOn)
         {
