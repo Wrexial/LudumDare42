@@ -26,6 +26,7 @@ public class WaterHandler : MonoBehaviour
     public float StartDelay = 3f;
     public float MinDelayForWater = 2f;
     public AnimationCurve WaterFlowCurve;
+    public Animator[] WaterTapAnimator;
 
     public bool WaterEdgeOn { get; private set; }
     public bool CanHandleWater { get; private set; }
@@ -81,6 +82,10 @@ public class WaterHandler : MonoBehaviour
         AudioManager.Instance.DrainEffect.EndPlaying();
         FillingWaterAnim.SetActive(true);
         DrainingWaterAnim.SetActive(false);
+        foreach (var item in WaterTapAnimator)
+        {
+            item.enabled = false;
+        }
     }
 
     public void TurnOffFaucet()
@@ -98,6 +103,10 @@ public class WaterHandler : MonoBehaviour
         AudioManager.Instance.DrainEffect.StartPlaying();
         FillingWaterAnim.SetActive(false);
         DrainingWaterAnim.SetActive(true);
+        foreach (var item in WaterTapAnimator)
+        {
+            item.enabled = true;
+        }
     }
 
     public void StopAllWaterInteractions()
@@ -113,6 +122,10 @@ public class WaterHandler : MonoBehaviour
         FillingWaterAnim.SetActive(false);
         DrainingWaterAnim.SetActive(false);
         CanHandleWater = false;
+        foreach (var item in WaterTapAnimator)
+        {
+            item.enabled = false;
+        }
     }
 
     public void ResumeWaterInteractions()
@@ -124,6 +137,10 @@ public class WaterHandler : MonoBehaviour
 
         _handleWaterCoroutine = Timing.RunCoroutine(HandleWater());
         CanHandleWater = true;
+        foreach (var item in WaterTapAnimator)
+        {
+            item.enabled = true;
+        }
     }
 
     public void GetClosestDataToEdge(Vector3 localPosition, out Vector3 closestPoint, out float closestDistance)
