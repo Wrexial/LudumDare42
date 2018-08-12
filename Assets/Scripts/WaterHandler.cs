@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MEC;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -35,7 +36,7 @@ public class WaterHandler : MonoBehaviour
     private CoroutineHandle? _waterLevelCoroutine;
     private CoroutineHandle? _faucetControls;
     private Transform[] _spawnPoints;
-
+    private EdgeCollider2D _waterCollider;
     private const float FISH_REFRESH_RATE = 0.15f;
 
     private float _waterDelay;
@@ -49,6 +50,7 @@ public class WaterHandler : MonoBehaviour
         WaterEdgeOn = false;
         WaterEdge.SetActive(false);
         _handleWaterCoroutine = Timing.RunCoroutine(HandleWater());
+        _waterCollider = GetComponent<EdgeCollider2D>();
     }
 
     private void OnDestroy()
@@ -94,6 +96,23 @@ public class WaterHandler : MonoBehaviour
     {
         _handleWaterCoroutine = Timing.RunCoroutine(HandleWater());
         CanHandleWater = true;
+    }
+
+    public void GetClosestDataToEdge(Vector3 localPosition, out Vector3 closestPoint, out float closestDistance)
+    {
+        closestPoint = Vector3.zero;
+        closestDistance = float.MaxValue;
+        var dist = 0f;
+
+        foreach (var point in _waterCollider.points)
+        {
+            dist = Vector3.Distance(localPosition, point);
+            if (dist < closestDistance)
+            {
+                closestPoint = point;
+                closestDistance = dist;
+            }
+        }
     }
 
     private void DecrementWaterLevel(float value, float overTime)

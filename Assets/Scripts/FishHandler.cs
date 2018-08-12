@@ -60,10 +60,31 @@ public class FishHandler : MonoBehaviour
             var vectorToTarget = position - transform.localPosition;
             var angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
 
+            //DOESNT REALLY WORK YET
             //if (WaterHandler.Instance.WaterEdgeOn)
             //{
-            //    var position = WaterHandler.Instance.GetClosestToEdge(transform.localPosition);
-            //Mod thisSpeed
+            //    var closestPos = Vector3.zero;
+            //    var edgeDistance = 0f;
+            //    WaterHandler.Instance.GetClosestDataToEdge(transform.localPosition, out closestPos, out edgeDistance);
+
+            //    var toPosition = (closestPos - transform.localPosition);
+            //    var angleToPosition = Mathf.Atan2(toPosition.y, toPosition.x) * Mathf.Rad2Deg;
+
+            //    if (angleToPosition < 0f)
+            //    {
+            //        angleToPosition += 360f;
+            //    }
+
+            //    Debug.Log("AP : " + angleToPosition + " ,D: " + edgeDistance);
+            //    if (angleToPosition < 180f)
+            //    {
+            //        thisSpeed = Mathf.Clamp(thisSpeed - ((100 - edgeDistance) * 0.25f), 1, Speed);
+            //    }
+            //    else
+            //    {
+            //        thisSpeed = Mathf.Clamp(thisSpeed + ((100 - edgeDistance) * 0.25f), 1, Speed * 2);
+            //    }
+            //    //Mod thisSpeed
             //}
 
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, position, thisSpeed * Time.deltaTime);
