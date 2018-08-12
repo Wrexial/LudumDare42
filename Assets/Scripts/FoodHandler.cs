@@ -41,6 +41,14 @@ public class FoodHandler : MonoBehaviour
         _foodQueue.Enqueue(foodItem);
         _foodCollected++;
         _foodStillIngame--;
+        if (_foodToSpawn == 0 && _foodStillIngame == 0)
+        {
+            AudioManager.Instance.PlayFinalPickup();
+        }
+        else
+        {
+            AudioManager.Instance.PlayPickup();
+        }
     }
 
     private void PoolFood()

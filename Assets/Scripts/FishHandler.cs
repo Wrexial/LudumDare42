@@ -11,6 +11,8 @@ public class FishHandler : MonoBehaviour
     private readonly float DISTANCE_CUTOFF = 0.1f;
     private Canvas _mainCanvas;
 
+    public bool IsMoving { get { return _movingCoroutine.HasValue; } }
+
     private void Awake()
     {
         _mainCanvas = GetComponentInParent<Canvas>();
@@ -23,7 +25,7 @@ public class FishHandler : MonoBehaviour
         MoveTo(pos);
     }
 
-    private void MoveTo(Vector3 position)
+    public void MoveTo(Vector3 position)
     {
         TimingHelpers.CleanlyKillCoroutine(ref _movingCoroutine);
         _movingCoroutine = Timing.RunCoroutine(HandleGoTo(position));
@@ -38,6 +40,7 @@ public class FishHandler : MonoBehaviour
         else if (collision.CompareTag("Death"))
         {
             Debug.Log("Game Over - Hit by cat");
+            AudioManager.Instance.PlayDeath();
         }
     }
 
@@ -49,6 +52,7 @@ public class FishHandler : MonoBehaviour
         if (WaterHandler.Instance.WaterEdgeOn)
         {
             Debug.Log("Game Over - Hit water edge");
+            AudioManager.Instance.PlayDeath();
         }
     }
 

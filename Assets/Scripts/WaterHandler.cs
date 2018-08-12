@@ -50,6 +50,7 @@ public class WaterHandler : MonoBehaviour
         WaterEdgeOn = false;
         WaterEdge.SetActive(false);
         _handleWaterCoroutine = Timing.RunCoroutine(HandleWater());
+        AudioManager.Instance.DrainEffect.StartPlaying();
         _waterCollider = GetComponent<EdgeCollider2D>();
     }
 
@@ -68,6 +69,8 @@ public class WaterHandler : MonoBehaviour
         _faucetOn = true;
         TimingHelpers.CleanlyKillCoroutine(ref _waterLevelCoroutine);
         _faucetControls = Timing.RunCoroutine(HandleFaucet());
+        AudioManager.Instance.FaucetEffect.StartPlaying();
+        AudioManager.Instance.DrainEffect.EndPlaying();
     }
 
     public void TurnOffFaucet()
@@ -81,7 +84,8 @@ public class WaterHandler : MonoBehaviour
         TimingHelpers.CleanlyKillCoroutine(ref _faucetControls);
         TimingHelpers.CleanlyKillCoroutine(ref _handleWaterCoroutine);
         _handleWaterCoroutine = Timing.RunCoroutine(HandleWater());
-
+        AudioManager.Instance.FaucetEffect.EndPlaying();
+        AudioManager.Instance.DrainEffect.StartPlaying();
     }
 
     public void StopAllWaterInteractions()
@@ -89,6 +93,8 @@ public class WaterHandler : MonoBehaviour
         _faucetOn = false;
         TimingHelpers.CleanlyKillCoroutine(ref _faucetControls);
         TimingHelpers.CleanlyKillCoroutine(ref _handleWaterCoroutine);
+        AudioManager.Instance.FaucetEffect.EndPlaying();
+        AudioManager.Instance.DrainEffect.EndPlaying();
         CanHandleWater = false;
     }
 
@@ -198,6 +204,7 @@ public class WaterHandler : MonoBehaviour
         {
             _currentWaterLevel = WATER_SIZE_LIMIT_MIN;
             Debug.Log("Game Over - Water level too low!!");
+            AudioManager.Instance.PlayDeath();
         }
         else if (WaterEdgeOn && _currentWaterLevel < WATER_SIZE_LIMIT_MAX_OFF)
         {
