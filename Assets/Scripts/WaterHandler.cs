@@ -124,7 +124,7 @@ public class WaterHandler : MonoBehaviour
         CanHandleWater = false;
         foreach (var item in WaterTapAnimator)
         {
-            item.enabled = true;
+            item.enabled = false;
         }
     }
 
@@ -137,6 +137,10 @@ public class WaterHandler : MonoBehaviour
 
         _handleWaterCoroutine = Timing.RunCoroutine(HandleWater());
         CanHandleWater = true;
+        foreach (var item in WaterTapAnimator)
+        {
+            item.enabled = true;
+        }
     }
 
     public void GetClosestDataToEdge(Vector3 localPosition, out Vector3 closestPoint, out float closestDistance)
