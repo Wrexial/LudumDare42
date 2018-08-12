@@ -56,6 +56,8 @@ public class WaterHandler : MonoBehaviour
         _handleWaterCoroutine = Timing.RunCoroutine(HandleWater());
         AudioManager.Instance.DrainEffect.StartPlaying();
         _waterCollider = GetComponent<EdgeCollider2D>();
+        FillingWaterAnim.SetActive(false);
+        DrainingWaterAnim.SetActive(true);
     }
 
     private void OnDestroy()

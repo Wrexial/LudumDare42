@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MEC;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class CatHandler : MonoBehaviour
@@ -9,10 +10,11 @@ public class CatHandler : MonoBehaviour
     public static CatHandler Instance;
 
     public Animator CatAnimator;
-    public GameObject Cat;
+    public Image Cat;
     public GameObject CatWaves;
     public GameObject CatAttackIndicatorPrefab;
     public MeowingHandler MeowingPrefab;
+    public Sprite[] Cats;
 
     public bool IsCatActive { get; private set; }
 
@@ -30,7 +32,7 @@ public class CatHandler : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        Cat.SetActive(false);
+        Cat.gameObject.SetActive(false);
         CatWaves.SetActive(false);
         _attacks = new List<Animator>();
         for (int i = 0; i < BaseAttackSpawnCount - 1; i++)
@@ -65,7 +67,7 @@ public class CatHandler : MonoBehaviour
     private IEnumerator<float> HandleCatCoroutine()
     {
         CoroutineHandle? meowing = null;
-        if (_round == 1)
+        if (_round == 4)
         {
             meowing = Timing.RunCoroutine(SpawnAllMeows());
         }
@@ -73,7 +75,8 @@ public class CatHandler : MonoBehaviour
         CatWaves.SetActive(true);
         yield return Timing.WaitForSeconds(AudioManager.Instance.CatTheme.StartClip.length);
         CatWaves.SetActive(false);
-        Cat.SetActive(true);
+        Cat.sprite = Cats[_round - 1];
+        Cat.gameObject.SetActive(true);
         yield return Timing.WaitForSeconds(DelayBeforeCatSpawnsAttacks);
         _attacks.Add(Instantiate(CatAttackIndicatorPrefab, transform).GetComponent<Animator>());
 
@@ -100,7 +103,7 @@ public class CatHandler : MonoBehaviour
             attack.gameObject.SetActive(false);
         }
 
-        Cat.SetActive(false);
+        Cat.gameObject.SetActive(false);
         WaterHandler.Instance.ResumeWaterInteractions();
 
         TimingHelpers.CleanlyKillCoroutine(ref meowing);
@@ -122,7 +125,7 @@ public class CatHandler : MonoBehaviour
         {
             meow.transform.localPosition = new Vector3(Random.Range(-380, 380), Random.Range(-200, 200), 0);
             meow.transform.Rotate(Vector3.back, Random.Range(0, 360));
-            meow.transform.localScale = Vector3.one * Random.Range(1f, 3f);
+            meow.transform.localScale = Vector3.one * Random.Range(0.5f, 1.25f);
             meow.gameObject.SetActive(true);
             meow.StartAnim();
             yield return Timing.WaitForSeconds(Random.Range(0.4f, 0.8f));
