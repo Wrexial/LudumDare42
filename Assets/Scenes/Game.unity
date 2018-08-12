@@ -950,6 +950,7 @@ GameObject:
   - component: {fileID: 480073973}
   - component: {fileID: 480073972}
   - component: {fileID: 480073971}
+  - component: {fileID: 480073974}
   m_Layer: 5
   m_Name: Tap
   m_TagString: Untagged
@@ -1056,6 +1057,24 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 480073969}
   m_CullTransparentMesh: 0
+--- !u!95 &480073974
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 480073969}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 008244caaab41394c8e4ceacdb07cdd1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -7353,6 +7372,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  WaterTapAnimator:
+  - {fileID: 480073974}
+  - {fileID: 1668740035}
 --- !u!114 &1362581817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8129,6 +8151,7 @@ GameObject:
   - component: {fileID: 1668740033}
   - component: {fileID: 1668740032}
   - component: {fileID: 1668740034}
+  - component: {fileID: 1668740035}
   m_Layer: 5
   m_Name: Faucet
   m_TagString: Untagged
@@ -8151,9 +8174,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -24, y: 121}
+  m_AnchoredPosition: {x: -24, y: 176.60196}
   m_SizeDelta: {x: 73, y: 154}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.8610518}
 --- !u!114 &1668740032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8235,6 +8258,24 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
+--- !u!95 &1668740035
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1668740030}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 008244caaab41394c8e4ceacdb07cdd1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1689935236
 GameObject:
   m_ObjectHideFlags: 0
