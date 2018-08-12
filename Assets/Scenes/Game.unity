@@ -7044,13 +7044,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf255b5fb5b76aa47a4b845a16b14826, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CatAnimator: {fileID: 627042062}
   Cat: {fileID: 627042057}
   CatWaves: {fileID: 118431091}
   CatAttackIndicatorPrefab: {fileID: 1717028321161882, guid: e1263d671819d974abcf328da813540d,
     type: 2}
-  DelayBeforeCatSpawnsAttacks: 1
+  DelayBeforeCatSpawnsAttacks: 2
   DelayBeforeCatAttacksKill: 2.5
-  DelayBeforeCatCleanup: 0.05
+  DelayBeforeCatCleanup: 1
   BaseAttackSpawnCount: 3
 --- !u!1 &1429794735
 GameObject:
