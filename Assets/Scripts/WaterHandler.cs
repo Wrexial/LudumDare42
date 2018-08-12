@@ -1,7 +1,6 @@
-﻿using System;
+﻿using MEC;
 using System.Collections.Generic;
 using System.Linq;
-using MEC;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -242,7 +241,6 @@ public class WaterHandler : MonoBehaviour
         else if (_currentWaterLevel < WATER_SIZE_LIMIT_MIN)
         {
             _currentWaterLevel = WATER_SIZE_LIMIT_MIN;
-            Debug.Log("Game Over - Water level too low!!");
             CurrentFish.KillFishie();
         }
         else if (WaterEdgeOn && _currentWaterLevel < WATER_SIZE_LIMIT_MAX_OFF)
