@@ -10,7 +10,7 @@ public class CatHandler : MonoBehaviour
 
     public Animator CatAnimator;
     public Image Cat;
-    public GameObject CatWaves;
+    public GameObject[] CatWaves;
     public GameObject CatAttackIndicatorPrefab;
     public MeowingHandler MeowingPrefab;
     public Sprite[] Cats;
@@ -32,7 +32,10 @@ public class CatHandler : MonoBehaviour
     {
         Instance = this;
         Cat.gameObject.SetActive(false);
-        CatWaves.SetActive(false);
+        foreach (var catWave in CatWaves)
+        {
+            catWave.SetActive(false);
+        }
         _attacks = new List<Animator>();
         for (int i = 0; i < BaseAttackSpawnCount - 1; i++)
         {
@@ -71,9 +74,17 @@ public class CatHandler : MonoBehaviour
             meowing = Timing.RunCoroutine(SpawnAllMeows());
         }
         AudioManager.Instance.CatTheme.StartPlaying();
-        CatWaves.SetActive(true);
+
+        foreach (var catWave in CatWaves)
+        {
+            catWave.SetActive(true);
+        }
         yield return Timing.WaitForSeconds(AudioManager.Instance.CatTheme.StartClip.length);
-        CatWaves.SetActive(false);
+
+        foreach (var catWave in CatWaves)
+        {
+            catWave.SetActive(false);
+        }
         Cat.sprite = Cats[_round - 1];
         Cat.gameObject.SetActive(true);
         yield return Timing.WaitForSeconds(DelayBeforeCatSpawnsAttacks);
