@@ -4,7 +4,21 @@ using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager Instance;
+    public static AudioManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<Transform>().gameObject.AddComponent<AudioManager>();
+            }
+
+            return _instance;
+        }
+        private set { _instance = value; }
+    }
+    private static AudioManager _instance;
+
     public AudioSource Source;
     public AudioSource OneShotSource;
 
