@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MEC;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -35,7 +36,7 @@ public class WaterHandler : MonoBehaviour
     private const float WATER_SIZE_LIMIT_MAX_OFF = 1.03f;
     private bool _faucetOn = false;
     private CoroutineHandle? _waterLevelCoroutine;
-    private CoroutineHandle? _faucetControls;
+    private CoroutineHandle? _handleFaucetCoroutine;
     private Transform[] _spawnPoints;
     private EdgeCollider2D _waterCollider;
     private const float FISH_REFRESH_RATE = 0.15f;
@@ -46,7 +47,7 @@ public class WaterHandler : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        _spawnPoints = WaterBasedSpawnPointsParent.GetComponentsInChildren<Transform>();
+        _spawnPoints = WaterBasedSpawnPointsParent.transform.Cast<Transform>().ToArray();
         CanHandleWater = true;
         WaterEdgeOn = false;
         WaterEdge.SetActive(false);
@@ -57,7 +58,9 @@ public class WaterHandler : MonoBehaviour
 
     private void OnDestroy()
     {
+        TimingHelpers.CleanlyKillCoroutine(ref _handleFaucetCoroutine);
         TimingHelpers.CleanlyKillCoroutine(ref _handleWaterCoroutine);
+        TimingHelpers.CleanlyKillCoroutine(ref _waterLevelCoroutine);
     }
 
     public void TurnOnFaucet()
@@ -69,7 +72,7 @@ public class WaterHandler : MonoBehaviour
 
         _faucetOn = true;
         TimingHelpers.CleanlyKillCoroutine(ref _waterLevelCoroutine);
-        _faucetControls = Timing.RunCoroutine(HandleFaucet());
+        _handleFaucetCoroutine = Timing.RunCoroutine(HandleFaucet());
         AudioManager.Instance.FaucetEffect.StartPlaying();
         AudioManager.Instance.DrainEffect.EndPlaying();
     }
@@ -82,7 +85,7 @@ public class WaterHandler : MonoBehaviour
         }
 
         _faucetOn = false;
-        TimingHelpers.CleanlyKillCoroutine(ref _faucetControls);
+        TimingHelpers.CleanlyKillCoroutine(ref _handleFaucetCoroutine);
         TimingHelpers.CleanlyKillCoroutine(ref _handleWaterCoroutine);
         _handleWaterCoroutine = Timing.RunCoroutine(HandleWater());
         AudioManager.Instance.FaucetEffect.EndPlaying();
@@ -92,10 +95,14 @@ public class WaterHandler : MonoBehaviour
     public void StopAllWaterInteractions()
     {
         _faucetOn = false;
-        TimingHelpers.CleanlyKillCoroutine(ref _faucetControls);
+
+        TimingHelpers.CleanlyKillCoroutine(ref _handleFaucetCoroutine);
         TimingHelpers.CleanlyKillCoroutine(ref _handleWaterCoroutine);
+        TimingHelpers.CleanlyKillCoroutine(ref _waterLevelCoroutine);
+
         AudioManager.Instance.FaucetEffect.EndPlaying();
         AudioManager.Instance.DrainEffect.EndPlaying();
+
         CanHandleWater = false;
     }
 

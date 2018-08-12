@@ -34,6 +34,8 @@ public class AudioManager : MonoBehaviour
     public LoopableHandler FaucetEffect;
     public LoopableHandler DrainEffect;
 
+    public AudioClip WinJingle;
+    public AudioClip LoseJingle;
     public AudioClip[] CatSpawn;
     public AudioClip[] Death;
     public AudioClip[] Swiming;
@@ -113,5 +115,15 @@ public class AudioManager : MonoBehaviour
     public void PlayFinalPickup()
     {
         OneShotSource.PlayOneShot(FinalPickup[Random.Range(0, FinalPickup.Length)]);
+    }
+
+    public void PlayWinJingle()
+    {
+        OneShotSource.PlayOneShot(WinJingle);
+    }
+
+    public void PlayLoseJingle()
+    {
+        OneShotSource.PlayOneShot(LoseJingle);
     }
 }

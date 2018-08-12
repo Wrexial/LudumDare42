@@ -4967,6 +4967,7 @@ GameObject:
   - component: {fileID: 65678488}
   - component: {fileID: 65678490}
   - component: {fileID: 65678489}
+  - component: {fileID: 65678491}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -5004,7 +5005,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -5012,11 +5013,11 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_Font: {fileID: 12800000, guid: 1f439c9c41996fa4b805b7bd6912dbcb, type: 3}
+    m_FontSize: 35
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 3
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -5024,7 +5025,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Drown :(
+  m_Text: Back
 --- !u!222 &65678490
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5032,6 +5033,20 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 65678487}
   m_CullTransparentMesh: 0
+--- !u!114 &65678491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 65678487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.7411765, g: 0.3529412, b: 0.09411765, a: 1}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &135531980
 GameObject:
   m_ObjectHideFlags: 0
@@ -5068,6 +5083,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0e977da60b0bab34c8c088fc2fc2b43a, type: 3}
   TailSprite:
   - {fileID: 21300000, guid: 6a89d9c60d7a84b40a799a6bccab5025, type: 3}
+  EOGUi: {fileID: 0}
+  EOGUiWin: {fileID: 0}
 --- !u!95 &135531982
 Animator:
   serializedVersion: 3
@@ -10364,6 +10381,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c9058f654ea69e140be26f2714ab477c, type: 3}
   TailSprite:
   - {fileID: 21300000, guid: 2de7145608b015b478b7cb40eb59071b, type: 3}
+  EOGUi: {fileID: 0}
+  EOGUiWin: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -10563,6 +10582,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f49f5a92d519c2147aaa90b2d189d7a7, type: 3}
   TailSprite:
   - {fileID: 21300000, guid: 58e31148bd1240d4f81bfcbc7c5a8872, type: 3}
+  EOGUi: {fileID: 0}
+  EOGUiWin: {fileID: 0}
 --- !u!1 &576376759
 GameObject:
   m_ObjectHideFlags: 0
@@ -16458,7 +16479,7 @@ GameObject:
   - component: {fileID: 1388533946}
   - component: {fileID: 1388533945}
   m_Layer: 5
-  m_Name: Button
+  m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16481,7 +16502,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 158, y: 68}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1388533945
 MonoBehaviour:
@@ -16512,7 +16533,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -16522,7 +16543,7 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 21300000, guid: a1d7083ba83bf144980b5dd0130e4a96, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -16555,8 +16576,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 5de0fb083f76a4d40a3b14d8f508a2ff, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -22048,6 +22069,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9dcab20d2434b094e81046ac916ddb26, type: 3}
   TailSprite:
   - {fileID: 21300000, guid: 8c0acb417c961284191a6bac27474033, type: 3}
+  EOGUi: {fileID: 0}
+  EOGUiWin: {fileID: 0}
 --- !u!1 &1840641568
 GameObject:
   m_ObjectHideFlags: 0
