@@ -15,6 +15,8 @@ public class WaterHandler : MonoBehaviour
     public float FaucetFillSpeed = 1f;
     public GameObject WaterEdge;
     public GameObject WaterBasedSpawnPointsParent;
+    public GameObject FillingWaterAnim;
+    public GameObject DrainingWaterAnim;
 
     public float MinDelayForWaterChange = 0.1f;
     public float MaxDelayForWaterChange = 0.25f;
@@ -75,6 +77,8 @@ public class WaterHandler : MonoBehaviour
         _handleFaucetCoroutine = Timing.RunCoroutine(HandleFaucet());
         AudioManager.Instance.FaucetEffect.StartPlaying();
         AudioManager.Instance.DrainEffect.EndPlaying();
+        FillingWaterAnim.SetActive(true);
+        DrainingWaterAnim.SetActive(false);
     }
 
     public void TurnOffFaucet()
@@ -90,6 +94,8 @@ public class WaterHandler : MonoBehaviour
         _handleWaterCoroutine = Timing.RunCoroutine(HandleWater());
         AudioManager.Instance.FaucetEffect.EndPlaying();
         AudioManager.Instance.DrainEffect.StartPlaying();
+        FillingWaterAnim.SetActive(false);
+        DrainingWaterAnim.SetActive(true);
     }
 
     public void StopAllWaterInteractions()
@@ -102,7 +108,8 @@ public class WaterHandler : MonoBehaviour
 
         AudioManager.Instance.FaucetEffect.EndPlaying();
         AudioManager.Instance.DrainEffect.EndPlaying();
-
+        FillingWaterAnim.SetActive(false);
+        DrainingWaterAnim.SetActive(false);
         CanHandleWater = false;
     }
 

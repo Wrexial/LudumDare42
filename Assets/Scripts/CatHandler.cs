@@ -122,6 +122,7 @@ public class CatHandler : MonoBehaviour
         {
             meow.transform.localPosition = new Vector3(Random.Range(-380, 380), Random.Range(-200, 200), 0);
             meow.transform.Rotate(Vector3.back, Random.Range(0, 360));
+            meow.transform.localScale = Vector3.one * Random.Range(1f, 3f);
             meow.gameObject.SetActive(true);
             meow.StartAnim();
             yield return Timing.WaitForSeconds(Random.Range(0.4f, 0.8f));
