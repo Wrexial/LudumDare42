@@ -866,7 +866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 361cb72f90f1e8b4b8035f9c61a761f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartClip: {fileID: 8300000, guid: 6251e61da91631947a39dca8b640cccc, type: 3}
+  StartClip: {fileID: 8300000, guid: b3b522a098629694ea43a5f964e60c6a, type: 3}
   LoopClip: {fileID: 8300000, guid: 232f20ffb074636448e28f8d418f44ab, type: 3}
   EndClip: {fileID: 8300000, guid: e7183a6852e354e4cb07f1be8132c478, type: 3}
   CrossFade: 1

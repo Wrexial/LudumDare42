@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 public class WaterHandler : MonoBehaviour
 {
     public static WaterHandler Instance;
+    public FishHandler CurrentFish;
 
     public float WaterSize = 500f;
     public float FaucetFillRate = 0.05f;
@@ -61,7 +62,7 @@ public class WaterHandler : MonoBehaviour
 
     public void TurnOnFaucet()
     {
-        if (!CanHandleWater)
+        if (!CanHandleWater || _faucetOn)
         {
             return;
         }
@@ -75,7 +76,7 @@ public class WaterHandler : MonoBehaviour
 
     public void TurnOffFaucet()
     {
-        if (!CanHandleWater)
+        if (!CanHandleWater || !_faucetOn)
         {
             return;
         }
@@ -100,6 +101,11 @@ public class WaterHandler : MonoBehaviour
 
     public void ResumeWaterInteractions()
     {
+        if (!CurrentFish.IsAlive)
+        {
+            return;
+        }
+
         _handleWaterCoroutine = Timing.RunCoroutine(HandleWater());
         CanHandleWater = true;
     }
@@ -204,7 +210,7 @@ public class WaterHandler : MonoBehaviour
         {
             _currentWaterLevel = WATER_SIZE_LIMIT_MIN;
             Debug.Log("Game Over - Water level too low!!");
-            AudioManager.Instance.PlayDeath();
+            CurrentFish.KillFishie();
         }
         else if (WaterEdgeOn && _currentWaterLevel < WATER_SIZE_LIMIT_MAX_OFF)
         {
