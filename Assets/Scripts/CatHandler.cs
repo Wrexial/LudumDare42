@@ -7,31 +7,32 @@ public class CatHandler : MonoBehaviour
 {
     public static CatHandler Instance;
 
+    public Animator CatAnimator;
     public GameObject Cat;
     public GameObject CatWaves;
     public GameObject CatAttackIndicatorPrefab;
 
     public bool IsCatActive { get; private set; }
-    
+
     public float DelayBeforeCatSpawnsAttacks = 2f;
     public float DelayBeforeCatAttacksKill = 2.5f;
-    public float DelayBeforeCatCleanup = 0.05f;
+    public float DelayBeforeCatCleanup = 1f;
 
     public int BaseAttackSpawnCount = 3;
 
     private int _round;
     private CoroutineHandle? _catHandler;
-    private List<Collider2D> _attacks;
+    private List<Animator> _attacks;
 
     private void Awake()
     {
         Instance = this;
         Cat.SetActive(false);
         CatWaves.SetActive(false);
-        _attacks = new List<Collider2D>();
+        _attacks = new List<Animator>();
         for (int i = 0; i < BaseAttackSpawnCount - 1; i++)
         {
-            var attackInstance = Instantiate(CatAttackIndicatorPrefab, transform).GetComponent<Collider2D>();
+            var attackInstance = Instantiate(CatAttackIndicatorPrefab, transform).GetComponent<Animator>();
             attackInstance.gameObject.SetActive(false);
             _attacks.Add(attackInstance);
         }
@@ -58,7 +59,7 @@ public class CatHandler : MonoBehaviour
         CatWaves.SetActive(false);
         Cat.SetActive(true);
         yield return Timing.WaitForSeconds(DelayBeforeCatSpawnsAttacks);
-        _attacks.Add(Instantiate(CatAttackIndicatorPrefab, transform).GetComponent<Collider2D>());
+        _attacks.Add(Instantiate(CatAttackIndicatorPrefab, transform).GetComponent<Animator>());
 
         foreach (var attack in _attacks)
         {
@@ -70,10 +71,11 @@ public class CatHandler : MonoBehaviour
 
         foreach (var attack in _attacks)
         {
-            attack.enabled = true;
+            attack.SetTrigger("Attack");
         }
         AudioManager.Instance.PlayCatAttack();
         AudioManager.Instance.CatTheme.EndPlaying();
+        CatAnimator.SetTrigger("Despawn");
 
         yield return Timing.WaitForSeconds(DelayBeforeCatCleanup);
 
