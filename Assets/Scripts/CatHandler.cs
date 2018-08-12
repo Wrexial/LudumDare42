@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MEC;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -11,6 +12,7 @@ public class CatHandler : MonoBehaviour
     public GameObject Cat;
     public GameObject CatWaves;
     public GameObject CatAttackIndicatorPrefab;
+    public MeowingHandler MeowingPrefab;
 
     public bool IsCatActive { get; private set; }
 
@@ -23,6 +25,7 @@ public class CatHandler : MonoBehaviour
     private int _round = 0;
     private CoroutineHandle? _handleCatCoroutine;
     private List<Animator> _attacks;
+    private List<MeowingHandler> _meowing;
 
     private void Awake()
     {
@@ -35,6 +38,14 @@ public class CatHandler : MonoBehaviour
             var attackInstance = Instantiate(CatAttackIndicatorPrefab, transform).GetComponent<Animator>();
             attackInstance.gameObject.SetActive(false);
             _attacks.Add(attackInstance);
+        }
+
+        _meowing = new List<MeowingHandler>();
+        for (int i = 0; i < 50; i++)
+        {
+            var meowInstance = Instantiate(MeowingPrefab, transform);
+            meowInstance.gameObject.SetActive(false);
+            _meowing.Add(meowInstance);
         }
     }
 
@@ -53,6 +64,11 @@ public class CatHandler : MonoBehaviour
 
     private IEnumerator<float> HandleCatCoroutine()
     {
+        CoroutineHandle? meowing = null;
+        if (_round == 1)
+        {
+            meowing = Timing.RunCoroutine(SpawnAllMeows());
+        }
         AudioManager.Instance.CatTheme.StartPlaying();
         CatWaves.SetActive(true);
         yield return Timing.WaitForSeconds(AudioManager.Instance.CatTheme.StartClip.length);
@@ -87,6 +103,8 @@ public class CatHandler : MonoBehaviour
         Cat.SetActive(false);
         WaterHandler.Instance.ResumeWaterInteractions();
 
+        TimingHelpers.CleanlyKillCoroutine(ref meowing);
+
         if (_round == 4)
         {
             WaterHandler.Instance.CurrentFish.Victory();
@@ -95,6 +113,18 @@ public class CatHandler : MonoBehaviour
         if (WaterHandler.Instance.CurrentFish.IsAlive)
         {
             IsCatActive = false;
+        }
+    }
+
+    private IEnumerator<float> SpawnAllMeows()
+    {
+        foreach (var meow in _meowing)
+        {
+            meow.transform.localPosition = new Vector3(Random.Range(-380, 380), Random.Range(-200, 200), 0);
+            meow.transform.Rotate(Vector3.back, Random.Range(0, 360));
+            meow.gameObject.SetActive(true);
+            meow.StartAnim();
+            yield return Timing.WaitForSeconds(Random.Range(0.4f, 0.8f));
         }
     }
 }

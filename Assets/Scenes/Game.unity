@@ -7419,6 +7419,8 @@ MonoBehaviour:
   CatWaves: {fileID: 118431091}
   CatAttackIndicatorPrefab: {fileID: 1717028321161882, guid: e1263d671819d974abcf328da813540d,
     type: 2}
+  MeowingPrefab: {fileID: 114070870866964534, guid: 2be1d5e98220c7e4dac22c5a0d16afe5,
+    type: 2}
   DelayBeforeCatSpawnsAttacks: 2
   DelayBeforeCatAttacksKill: 2.5
   DelayBeforeCatCleanup: 2
