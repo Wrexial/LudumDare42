@@ -78,9 +78,11 @@ public class FishHandler : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         TimingHelpers.CleanlyKillCoroutine(ref _movingCoroutine);
+        _movingCoroutine = Timing.RunCoroutine(HandleGoTo(transform.localPosition));
+
         Debug.Log("Hit edge!");
 
         if (WaterHandler.Instance.WaterEdgeOn)

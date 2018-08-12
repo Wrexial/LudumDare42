@@ -623,8 +623,8 @@ MonoBehaviour:
   CatTheme: {fileID: 1844000240}
   FaucetEffect: {fileID: 2100601267}
   DrainEffect: {fileID: 1235544253}
-  WinJingle: {fileID: 8300000, guid: 46a8865dbd0f80d48a64b781c6ddeb3b, type: 3}
-  LoseJingle: {fileID: 8300000, guid: d921614fbc23644449ef10ba15ef6cf5, type: 3}
+  WinJingle: {fileID: 8300000, guid: d39a1875c537e6a44acc3124701658fb, type: 3}
+  LoseJingle: {fileID: 8300000, guid: 2e796ab4d8e50a04e89f36582ef9e3ea, type: 3}
   CatSpawn:
   - {fileID: 8300000, guid: b0fe382f50e926c479e3a94397a64d5e, type: 3}
   - {fileID: 8300000, guid: 9938f66104694dd41820b79d11db7eae, type: 3}
@@ -1211,8 +1211,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 361cb72f90f1e8b4b8035f9c61a761f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartClip: {fileID: 8300000, guid: b3b522a098629694ea43a5f964e60c6a, type: 3}
-  LoopClip: {fileID: 8300000, guid: 232f20ffb074636448e28f8d418f44ab, type: 3}
+  StartClip: {fileID: 8300000, guid: 5c0ce84138441ee4c98766e0cfa8d256, type: 3}
+  LoopClip: {fileID: 8300000, guid: cb91218a6b48cc34385896049c7aa3bf, type: 3}
   EndClip: {fileID: 8300000, guid: e7183a6852e354e4cb07f1be8132c478, type: 3}
   CrossFade: 1
   CrossFadeOnCurve:
