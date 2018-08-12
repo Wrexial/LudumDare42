@@ -20,8 +20,8 @@ public class CatHandler : MonoBehaviour
 
     public int BaseAttackSpawnCount = 3;
 
-    private int _round;
-    private CoroutineHandle? _catHandler;
+    private int _round = 0;
+    private CoroutineHandle? _handleCatCoroutine;
     private List<Animator> _attacks;
 
     private void Awake()
@@ -40,7 +40,7 @@ public class CatHandler : MonoBehaviour
 
     private void OnDestroy()
     {
-        TimingHelpers.CleanlyKillCoroutine(ref _catHandler);
+        TimingHelpers.CleanlyKillCoroutine(ref _handleCatCoroutine);
     }
 
     public void HandleCat()
@@ -48,7 +48,7 @@ public class CatHandler : MonoBehaviour
         _round++;
         IsCatActive = true;
         WaterHandler.Instance.StopAllWaterInteractions();
-        _catHandler = Timing.RunCoroutine(HandleCatCoroutine());
+        _handleCatCoroutine = Timing.RunCoroutine(HandleCatCoroutine());
     }
 
     private IEnumerator<float> HandleCatCoroutine()
@@ -86,6 +86,12 @@ public class CatHandler : MonoBehaviour
 
         Cat.SetActive(false);
         WaterHandler.Instance.ResumeWaterInteractions();
+
+        if (_round == 4)
+        {
+            WaterHandler.Instance.CurrentFish.Victory();
+        }
+
         if (WaterHandler.Instance.CurrentFish.IsAlive)
         {
             IsCatActive = false;

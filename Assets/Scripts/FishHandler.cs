@@ -12,6 +12,9 @@ public class FishHandler : MonoBehaviour
     public Image Tail;
     public Sprite[] HeadSprite;
     public Sprite[] TailSprite;
+    public GameObject EOGUi;
+    public GameObject EOGUiWin;
+
     private CoroutineHandle? _movingCoroutine;
     private readonly float DISTANCE_CUTOFF = 0.1f;
     private Canvas _mainCanvas;
@@ -27,11 +30,26 @@ public class FishHandler : MonoBehaviour
         Head.sprite = HeadSprite[r];
         Tail.sprite = TailSprite[r];
         IsAlive = true;
+
+        if (EOGUi != null)
+        {
+            EOGUi.SetActive(false);
+        }
+
+        if (EOGUiWin != null)
+        {
+            EOGUiWin.SetActive(false);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        TimingHelpers.CleanlyKillCoroutine(ref _movingCoroutine);
     }
 
     public void OnClick()
     {
-        if(!IsAlive)
+        if (!IsAlive)
         {
             return;
         }
@@ -121,7 +139,6 @@ public class FishHandler : MonoBehaviour
     public void KillFishie()
     {
         IsAlive = false;
-
         WaterHandler.Instance.StopAllWaterInteractions();
         TimingHelpers.CleanlyKillCoroutine(ref _movingCoroutine);
         _animator.SetTrigger("Die");
@@ -130,7 +147,22 @@ public class FishHandler : MonoBehaviour
 
         Timing.CallDelayed(2f, () =>
         {
-            //Show End of game ui.
+            EOGUi.SetActive(true);
+            AudioManager.Instance.PlayLoseJingle();
+        });
+    }
+
+    public void Victory()
+    {
+        IsAlive = false;
+
+        WaterHandler.Instance.StopAllWaterInteractions();
+        TimingHelpers.CleanlyKillCoroutine(ref _movingCoroutine);
+        AudioManager.Instance.PlayWinJingle();
+
+        Timing.CallDelayed(2f, () =>
+        {
+            EOGUiWin.SetActive(true);
         });
     }
 }

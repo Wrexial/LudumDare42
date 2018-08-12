@@ -1,5 +1,6 @@
 ﻿using MEC;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -25,7 +26,7 @@ public class FoodHandler : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        _spawnPoints = GetComponentsInChildren<Transform>();
+        _spawnPoints = transform.Cast<Transform>().ToArray();
         PoolFood();
         _foodSpawner = Timing.RunCoroutine(HandleFoodSpawning());
     }
