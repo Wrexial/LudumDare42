@@ -12,11 +12,11 @@ public class CatHandler : MonoBehaviour
     public GameObject CatAttackIndicatorPrefab;
 
     public bool IsCatActive { get; private set; }
-
-    public float CatWaveDuration = 2.5f;
-    public float DelayBeforeCatSpawnsAttacks = 1f;
+    
+    public float DelayBeforeCatSpawnsAttacks = 2f;
     public float DelayBeforeCatAttacksKill = 2.5f;
     public float DelayBeforeCatCleanup = 0.05f;
+
     public int BaseAttackSpawnCount = 3;
 
     private int _round;
@@ -52,8 +52,9 @@ public class CatHandler : MonoBehaviour
 
     private IEnumerator<float> HandleCatCoroutine()
     {
+        AudioManager.Instance.CatTheme.StartPlaying();
         CatWaves.SetActive(true);
-        yield return Timing.WaitForSeconds(CatWaveDuration);
+        yield return Timing.WaitForSeconds(AudioManager.Instance.CatTheme.StartClip.length);
         CatWaves.SetActive(false);
         Cat.SetActive(true);
         yield return Timing.WaitForSeconds(DelayBeforeCatSpawnsAttacks);
@@ -71,6 +72,8 @@ public class CatHandler : MonoBehaviour
         {
             attack.enabled = true;
         }
+        AudioManager.Instance.PlayCatAttack();
+        AudioManager.Instance.CatTheme.EndPlaying();
 
         yield return Timing.WaitForSeconds(DelayBeforeCatCleanup);
 

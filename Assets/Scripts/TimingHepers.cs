@@ -7,6 +7,7 @@ public class TimingHelpers
         if(coroutine.HasValue)
         {
             Timing.KillCoroutines(coroutine.Value);
+            coroutine = null;
         }
     }
 }
