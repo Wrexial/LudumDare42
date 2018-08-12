@@ -26,10 +26,7 @@ public class AudioManager : MonoBehaviour
     public Image MuteButtonImage;
     public Sprite SoundOff;
     public Sprite SoundOn;
-
-    public AudioClip MenuMusic;
-    public AudioClip GameMusic;
-
+    
     public LoopableHandler CatTheme;
     public LoopableHandler FaucetEffect;
     public LoopableHandler DrainEffect;
@@ -51,36 +48,6 @@ public class AudioManager : MonoBehaviour
 
     private void SceneManager_activeSceneChanged(Scene current, Scene next)
     {
-        if (next.buildIndex == 3)
-        {
-            PlayGameMusic();
-        }
-        else
-        {
-            PlayMenuMusic();
-        }
-    }
-
-    private void PlayMenuMusic()
-    {
-        if (Source.clip == MenuMusic)
-        {
-            return;
-        }
-
-        Source.clip = MenuMusic;
-        Source.Play();
-    }
-
-    private void PlayGameMusic()
-    {
-        if (Source.clip == GameMusic)
-        {
-            return;
-        }
-
-        Source.clip = GameMusic;
-        Source.Play();
     }
 
     private void ToggleHandle()
