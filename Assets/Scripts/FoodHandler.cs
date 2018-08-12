@@ -64,7 +64,7 @@ public class FoodHandler : MonoBehaviour
 
     private IEnumerator<float> HandleFoodSpawning()
     {
-        while (true)
+        while (WaterHandler.Instance.CurrentFish.IsAlive)
         {
             Debug.Log("Spawning next round");
             _foodToSpawn = Random.Range(FoodToSpawnForRoundMin, FoodToSpawnForRoundMax);

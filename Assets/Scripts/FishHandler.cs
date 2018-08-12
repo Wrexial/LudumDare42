@@ -1,25 +1,41 @@
 ﻿using MEC;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class FishHandler : MonoBehaviour
 {
     public float Speed = 15f;
     public float RotationSpeed = 10f;
+    public Image Head;
+    public Image Tail;
+    public Sprite[] HeadSprite;
+    public Sprite[] TailSprite;
     private CoroutineHandle? _movingCoroutine;
     private readonly float DISTANCE_CUTOFF = 0.1f;
     private Canvas _mainCanvas;
-
+    private Animator _animator;
+    public bool IsAlive { get; private set; }
     public bool IsMoving { get { return _movingCoroutine.HasValue; } }
 
     private void Awake()
     {
         _mainCanvas = GetComponentInParent<Canvas>();
+        _animator = GetComponent<Animator>();
+        var r = Random.Range(0, HeadSprite.Length);
+        Head.sprite = HeadSprite[r];
+        Tail.sprite = TailSprite[r];
+        IsAlive = true;
     }
 
     public void OnClick()
     {
+        if(!IsAlive)
+        {
+            return;
+        }
+
         Vector2 pos;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(_mainCanvas.transform as RectTransform, Input.mousePosition, _mainCanvas.worldCamera, out pos);
         MoveTo(pos);
@@ -39,8 +55,8 @@ public class FishHandler : MonoBehaviour
         }
         else if (collision.CompareTag("Death"))
         {
+            KillFishie();
             Debug.Log("Game Over - Hit by cat");
-            AudioManager.Instance.PlayDeath();
         }
     }
 
@@ -51,8 +67,8 @@ public class FishHandler : MonoBehaviour
 
         if (WaterHandler.Instance.WaterEdgeOn)
         {
+            KillFishie();
             Debug.Log("Game Over - Hit water edge");
-            AudioManager.Instance.PlayDeath();
         }
     }
 
@@ -100,5 +116,21 @@ public class FishHandler : MonoBehaviour
         }
 
         _movingCoroutine = null;
+    }
+
+    public void KillFishie()
+    {
+        IsAlive = false;
+
+        WaterHandler.Instance.StopAllWaterInteractions();
+        TimingHelpers.CleanlyKillCoroutine(ref _movingCoroutine);
+        _animator.SetTrigger("Die");
+
+        AudioManager.Instance.PlayDeath();
+
+        Timing.CallDelayed(2f, () =>
+        {
+            //Show End of game ui.
+        });
     }
 }

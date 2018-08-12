@@ -86,6 +86,9 @@ public class CatHandler : MonoBehaviour
 
         Cat.SetActive(false);
         WaterHandler.Instance.ResumeWaterInteractions();
-        IsCatActive = false;
+        if (WaterHandler.Instance.CurrentFish.IsAlive)
+        {
+            IsCatActive = false;
+        }
     }
 }
